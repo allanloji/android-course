@@ -199,7 +199,14 @@ public class MainActivity extends Activity {
        return (builtUri.toString());
     }
 
+/* md5
 
+MD5 son las siglas de “Message Digest Algorithm 5”. Se utiliza como una
+función de codificación o huella digital de un archivo. Es empleado para codificar contraseñas
+en bases de datos, el MD5 es igualmente capaz de generar una huella de archivo para asegurar que no
+haya cambios en el mismo tras una transferencia, un hash MD5 está compuesto por 32 caracteres hexadecimales.
+
+ */
 
     public static String md5(String s) {
         try {
@@ -216,6 +223,13 @@ public class MainActivity extends Activity {
 
     /*
         Investiga y reporta qué hace esta aplicación
+
+        Devuelve datos como texto en formato hexadecimal.
+        Si bien la codificación del nombre de usuario y la contraseña con el algoritmo Base64
+        generalmente los hace ilegibles a simple vista, se decodifican facilmente. La seguridad
+        no es la intención del paso de codificación. La intención de la codificación es codificar
+        los caracteres no compatibles con HTTP que pueden estar en el nombre de usuario o contraseña
+        en aquellos que son compatibles con HTTP.
     */
     public static String hexEncode(byte[] bytes) {
         char[] result = new char[bytes.length*2];
