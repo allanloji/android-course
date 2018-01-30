@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">IMC</string>
+    <string name="nombre">Nombre:</string>
+    <string name="peso">Peso: 50kg</string>
+    <string name="altura">Altura: 1.6</string>
+    <string name="imc">Calcular IMC</string>
+    <string name="abrir">Abrir página BMI</string>
+    <string name="calcular">Calcular</string>
+    <string name="compartir">Compartir resultados</string>
+    <string name="recalcular">Recalcular</string>
+    <string name="reset">Reiniciar cálculos</string>
+</resources>
