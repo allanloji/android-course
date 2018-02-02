@@ -1,12 +1,8 @@
 package com.allanlopez.marvel;
 
 import android.app.Activity;
-import android.app.ListActivity;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Debug;
-import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -14,10 +10,9 @@ import android.widget.ListView;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
-import com.allanlopez.marvel.adapters.ItuneArrayAdapter;
 import com.allanlopez.marvel.adapters.MarvelArrayAdapter;
 import com.allanlopez.marvel.pojo.Heroe;
-import com.allanlopez.marvel.pojo.Itune;
+import com.allanlopez.marvel.pojo.MarvelDude;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -28,27 +23,19 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.ArrayList;
 
 public class MainActivity extends Activity {
-    private  ArrayAdapter<String> arrayAdapter;
-    private ItuneArrayAdapter ituneItuneArrayAdapter;
-    private MarvelArrayAdapter heroeArrayAdapter;
+    private MarvelArrayAdapter marvelArrayAdapter;
     private ListView listView;
     private RequestQueue mQueue;
     private SeekBar seekBar;
     private Button search;
     private TextView seekBarValue;
     private int offset = 0;
-    private ArrayAdapter<String> adapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -81,19 +68,19 @@ public class MainActivity extends Activity {
 
         listView = (ListView) findViewById(R.id.lista);
         /*
-        ituneItuneArrayAdapter = new ItuneArrayAdapter(this, R.layout.itunes_layout, new ArrayList<Itune>());
+        ituneItuneArrayAdapter = new ItuneArrayAdapter(this, R.layout.marvel_layout, new ArrayList<Itune>());
         listView.setAdapter(ituneItuneArrayAdapter);
 
         new ProcesaJson(ituneItuneArrayAdapter).execute("https://itunes.apple.com/search?term=foals");*/
 
 
-        /*heroeArrayAdapter = new MarvelArrayAdapter(this, R.layout.itunes_layout, new ArrayList<Heroe>());
+        /*heroeArrayAdapter = new MarvelArrayAdapter(this, R.layout.marvel_layout, new ArrayList<Heroe>());
         listView.setAdapter(heroeArrayAdapter);*/
         //new MarvelJson(heroeArrayAdapter).execute();
-        adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, new ArrayList<String>());
-        listView.setAdapter(adapter);
+        marvelArrayAdapter = new MarvelArrayAdapter(this, R.layout.marvel_layout, new ArrayList<MarvelDude>());
+        listView.setAdapter(marvelArrayAdapter);
         mQueue = VolleySingleton.getInstance(this).getRequestQueue();
-        jsonMarvel(getMarvelString(), adapter);
+        jsonMarvel(getMarvelString(), marvelArrayAdapter);
     }
 
     /*public class ProcesaJson extends AsyncTask<String, Integer, ArrayList<Itune>>{
@@ -137,7 +124,7 @@ public class MainActivity extends Activity {
 
     private static char[] HEXCodes = {'0','1','2','3','4','5','6','7','8','9','a','b','c','d','e','f'};
 
-    private void jsonMarvel(String url, final ArrayAdapter<String> adapter){
+    private void jsonMarvel(String url, final MarvelArrayAdapter adapter){
         adapter.clear();
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET,
                 url, null, new Response.Listener<JSONObject>() {
@@ -148,7 +135,9 @@ public class MainActivity extends Activity {
                     JSONArray jsonArray = data.getJSONArray("results");
                     for (int i = 0; i < jsonArray.length(); i++){
                         JSONObject jsonObject = jsonArray.getJSONObject(i);
-                        adapter.add(jsonObject.getString("name"));
+                        MarvelDude marvelDude = new MarvelDude();
+                        marvelDude.name = jsonObject.getString("name");
+                        adapter.add(marvelDude);
                     }
                     adapter.notifyDataSetChanged();
                 } catch (JSONException e) {
@@ -244,6 +233,6 @@ haya cambios en el mismo tras una transferencia, un hash MD5 está compuesto por
 
     public void changeOffset(View view){
         offset = Integer.parseInt( seekBarValue.getText().toString());
-        jsonMarvel(getMarvelString(), adapter);
+        jsonMarvel(getMarvelString(), marvelArrayAdapter);
     }
 }
