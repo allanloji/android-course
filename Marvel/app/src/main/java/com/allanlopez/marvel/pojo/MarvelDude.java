@@ -5,5 +5,5 @@ package com.allanlopez.marvel.pojo;
  */
 
 public class MarvelDude {
-    public String name, url;
+    public String name, url, id;
 }

@@ -81,6 +81,16 @@ public class MainActivity extends Activity {
         listView.setAdapter(marvelArrayAdapter);
         mQueue = VolleySingleton.getInstance(this).getRequestQueue();
         jsonMarvel(getMarvelString(), marvelArrayAdapter);
+        listView.setOnItemClickListener(){
+          @Override
+          public void onItemClick(AdapterView<?> adapterView, View view, int i, long l){
+                MarvelDude md = marvelArrayAdapter.getItem(i);
+                Toast.makeText(getApplicationContext(),
+                        md.id, Toast.LENGTH_LONG).show();
+            }
+        };
+
+
     }
 
     /*public class ProcesaJson extends AsyncTask<String, Integer, ArrayList<Itune>>{
@@ -135,8 +145,11 @@ public class MainActivity extends Activity {
                     JSONArray jsonArray = data.getJSONArray("results");
                     for (int i = 0; i < jsonArray.length(); i++){
                         JSONObject jsonObject = jsonArray.getJSONObject(i);
+                        JSONObject thumbnail = jsonObject.getJSONObject("thumbnail");
                         MarvelDude marvelDude = new MarvelDude();
                         marvelDude.name = jsonObject.getString("name");
+                        marvelDude.url = thumbnail.getString("path") + "/portrait_small" + thumbnail.getString(extension);
+                        marvelDude.id = jsonObject.getLong("id");
                         adapter.add(marvelDude);
                     }
                     adapter.notifyDataSetChanged();
