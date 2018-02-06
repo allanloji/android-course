@@ -60,7 +60,7 @@ public class MarvelArrayAdapter extends ArrayAdapter<MarvelDude> {
 
                     }
                 });
-        networkImageView.setImageUrl("http://i.annihil.us/u/prod/marvel/i/mg/3/40/4bb4680432f73/portrait_xlarge.jpg", imageLoader);
+        networkImageView.setImageUrl(marvelDude.url, imageLoader);
 
         return convertView;
     }

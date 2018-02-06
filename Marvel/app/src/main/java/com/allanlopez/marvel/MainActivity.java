@@ -1,14 +1,17 @@
 package com.allanlopez.marvel;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.allanlopez.marvel.adapters.MarvelArrayAdapter;
 import com.allanlopez.marvel.pojo.Heroe;
@@ -81,14 +84,16 @@ public class MainActivity extends Activity {
         listView.setAdapter(marvelArrayAdapter);
         mQueue = VolleySingleton.getInstance(this).getRequestQueue();
         jsonMarvel(getMarvelString(), marvelArrayAdapter);
-        listView.setOnItemClickListener(){
-          @Override
-          public void onItemClick(AdapterView<?> adapterView, View view, int i, long l){
-                MarvelDude md = marvelArrayAdapter.getItem(i);
-                Toast.makeText(getApplicationContext(),
-                        md.id, Toast.LENGTH_LONG).show();
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                MarvelDude md = marvelArrayAdapter.getItem((int)id);
+                Toast.makeText(getApplicationContext(),md.id, Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(MainActivity.this, HeroDetailActivity.class);
+                intent.putExtra("id", md.id);
+                startActivity(intent);
             }
-        };
+        });
 
 
     }
@@ -148,8 +153,8 @@ public class MainActivity extends Activity {
                         JSONObject thumbnail = jsonObject.getJSONObject("thumbnail");
                         MarvelDude marvelDude = new MarvelDude();
                         marvelDude.name = jsonObject.getString("name");
-                        marvelDude.url = thumbnail.getString("path") + "/portrait_small" + thumbnail.getString(extension);
-                        marvelDude.id = jsonObject.getLong("id");
+                        marvelDude.url = thumbnail.getString("path") + "/portrait_small." + thumbnail.getString("extension");
+                        marvelDude.id = jsonObject.getString("id");
                         adapter.add(marvelDude);
                     }
                     adapter.notifyDataSetChanged();
