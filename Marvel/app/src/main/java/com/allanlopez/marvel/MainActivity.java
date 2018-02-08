@@ -88,7 +88,6 @@ public class MainActivity extends Activity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 MarvelDude md = marvelArrayAdapter.getItem((int)id);
-                Toast.makeText(getApplicationContext(),md.id, Toast.LENGTH_LONG).show();
                 Intent intent = new Intent(MainActivity.this, HeroDetailActivity.class);
                 intent.putExtra("id", md.id);
                 startActivity(intent);

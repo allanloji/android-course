@@ -71,7 +71,13 @@ public class HeroDetailActivity extends Activity {
                     JSONObject jsonObject = jsonArray.getJSONObject(0);
                     JSONObject thumbnail = jsonObject.getJSONObject("thumbnail");
                     nombre.setText(jsonObject.getString("name"));
-                    descripcion.setText(jsonObject.getString("description"));
+                    String description = jsonObject.getString("description");
+                    if (description.equals("")){
+                        descripcion.setText("Lamentablemente no se cuenta información sobre este superheroe");
+                    }else {
+                        descripcion.setText(jsonObject.getString("description"));
+                    }
+
                     imgUrl = thumbnail.getString("path") + "/portrait_medium." + thumbnail.getString("extension");
                     LoadImage(imgUrl);
 

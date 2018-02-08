@@ -6,41 +6,13 @@
     android:layout_height="match_parent"
     tools:context="com.allanlopez.marvel.MainActivity">
 
-    <EditText
-        android:id="@+id/editText"
-        android:layout_width="211dp"
-        android:layout_height="53dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginStart="16dp"
-        android:layout_marginTop="27dp"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:text="Name"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <Button
-        android:id="@+id/button"
-        android:layout_width="92dp"
-        android:layout_height="60dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginLeft="38dp"
-        android:layout_marginRight="8dp"
-        android:layout_marginStart="38dp"
-        android:layout_marginTop="27dp"
-        android:text="Button"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintLeft_toRightOf="@+id/editText"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
     <ListView
         android:id="@+id/lista"
         android:layout_width="365dp"
-        android:layout_height="397dp"
+        android:layout_height="438dp"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="40dp"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -72,10 +44,12 @@
         android:layout_width="138dp"
         android:layout_height="40dp"
         android:layout_marginBottom="12dp"
+        android:layout_marginTop="8dp"
         android:text="0"
         android:textAlignment="center"
         app:layout_constraintBottom_toTopOf="@+id/seekBar"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/lista" />
 </android.support.constraint.ConstraintLayout>
