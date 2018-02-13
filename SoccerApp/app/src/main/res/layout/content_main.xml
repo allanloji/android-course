@@ -11,11 +11,11 @@
 
     <FrameLayout
         android:id="@+id/uno"
-        android:layout_width="336dp"
-        android:layout_height="70dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="32dp"
+        android:layout_marginTop="40dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.491"
         app:layout_constraintStart_toStartOf="parent"
@@ -23,31 +23,4 @@
 
     </FrameLayout>
 
-    <fragment
-        android:id="@+id/fragment"
-        android:name="com.allanlopez.soccerapp.StaticFragment"
-        android:layout_width="236dp"
-        android:layout_height="63dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="44dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/dos"
-        app:layout_constraintVertical_bias="0.108" />
-
-    <FrameLayout
-        android:id="@+id/dos"
-        android:layout_width="376dp"
-        android:layout_height="262dp"
-        android:layout_marginEnd="8dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.58"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="154dp">
-
-    </FrameLayout>
 </android.support.constraint.ConstraintLayout>

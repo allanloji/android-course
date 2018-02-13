@@ -90,12 +90,12 @@ public class MainActivity extends AppCompatActivity
             // Handle the camera action
             FragmentManager fragmentManager = getFragmentManager();
             FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
-            fragmentTransaction.replace(R.id.uno, new UnoFragment());
+            fragmentTransaction.replace(R.id.uno, new MatchesListFragment());
             fragmentTransaction.commit();
 
-            fragmentTransaction = fragmentManager.beginTransaction();
+            /*fragmentTransaction = fragmentManager.beginTransaction();
             fragmentTransaction.replace(R.id.dos, new DosFragment(),"dos");
-            fragmentTransaction.commit();
+            fragmentTransaction.commit();*/
         } else if (id == R.id.nav_gallery) {
 
         } else if (id == R.id.nav_slideshow) {
