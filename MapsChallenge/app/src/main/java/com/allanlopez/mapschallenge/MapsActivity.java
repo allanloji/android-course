@@ -197,7 +197,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             @Override
             public void onResponse(JSONArray response) {
                 try {
-                    for (int i = 0; i < response.length(); i++){
+                    for (int i = 0; i < 5; i++){
                         JSONObject jsonObject = response.getJSONObject(i);
                         LatLng place = new LatLng(Double.parseDouble(jsonObject.getString("lat")), Double.parseDouble(jsonObject.getString("lng")));
                         mMap.addMarker(new MarkerOptions().position(place).title(jsonObject.getString("name")));
