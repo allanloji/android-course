@@ -1,4 +1,4 @@
-package com.allanlopez.marvel;
+package com.allanlopez.mapschallenge;
 
 import android.content.Context;
 
@@ -6,11 +6,10 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.Volley;
 
 /**
- * Created by allanlopez on 30/01/18.
+ * Created by allanlopez on 23/02/18.
  */
 
 public class VolleySingleton {
-
     private static VolleySingleton mInstance;
     private RequestQueue mRequestQueue;
 
