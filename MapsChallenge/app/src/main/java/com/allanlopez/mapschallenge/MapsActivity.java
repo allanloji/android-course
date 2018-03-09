@@ -4,6 +4,7 @@ import android.Manifest;
 import android.content.Context;
 import android.content.pm.PackageManager;
 import android.location.Location;
+import android.media.MediaScannerConnection;
 import android.net.Uri;
 import android.os.Build;
 import android.support.annotation.NonNull;
@@ -12,6 +13,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
+import android.util.Log;
 import android.view.View;
 
 import com.android.volley.Request;
@@ -41,6 +43,12 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback,
@@ -216,6 +224,80 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             }
         });
         mQueue.add(request);
+    }
+
+    public void Write(String json){
+        try {
+            // Creates a file in the primary external storage space of the
+            // current application.
+            // If the file does not exists, it is created.
+            File testFile = new File(this.getExternalFilesDir(null), "TestFile.json");
+            if (!testFile.exists()) {
+                testFile.createNewFile();
+                BufferedWriter writer = new BufferedWriter(new FileWriter(testFile, true /*append*/));
+                String jsonFinal ="{" + '\n' + "\"" + "places" + "\":[" + json + '\n' + "]" + "\n" + "}" ;
+                writer.write(jsonFinal);
+                Log.e("Escritura", "Se escribio" + jsonFinal);
+                writer.close();
+            }else {
+                // Adds a line to the file
+                BufferedWriter writer = new BufferedWriter(new FileWriter(testFile, false /*append*/));
+                String jsonFInal = addObject(json);
+                writer.write(jsonFInal);
+                Log.e("Escritura", "Se escribio" + jsonFInal);
+                writer.close();
+            }
+
+            // Refresh the data so it can seen when the device is plugged in a
+            // computer. You may have to unplug and replug the device to see the
+            // latest changes. This is not necessary if the user should not modify
+            // the files.
+            MediaScannerConnection.scanFile(this,
+                    new String[]{testFile.toString()},
+                    null,
+                    null);
+        } catch (IOException e) {
+            Log.e("ReadWriteFile", "Unable to write to the TestFile.txt file.");
+        }
+    }
+
+    public String addObject(String obj){
+        String textFromFile = "";
+// Gets the file from the primary external storage space of the
+// current application.
+        File testFile = new File(this.getExternalFilesDir(null), "TestFile.json");
+        if (testFile != null) {
+            StringBuilder stringBuilder = new StringBuilder();
+            // Reads the data from the file
+            BufferedReader reader = null;
+            try {
+                reader = new BufferedReader(new FileReader(testFile));
+                String line;
+
+                while ((line = reader.readLine()) != null) {
+                    if(line.equals("]")){
+                        textFromFile += obj;
+                        textFromFile += "\n" + "]" + "\n" + "}";
+                        line = null;
+                    }else {
+                        textFromFile += line.toString();
+                        textFromFile += "\n";
+                    }
+                    Log.e("Lines", line.toString());
+                }
+                reader.close();
+            } catch (Exception e) {
+                Log.e("ReadWriteFile", "Unable to read the TestFile.txt file.");
+            }
+            return textFromFile;
+        }else {
+            return "";
+        }
+
+    }
+
+    public void AddJson(View view){
+        Write("hola");
     }
 
 }
