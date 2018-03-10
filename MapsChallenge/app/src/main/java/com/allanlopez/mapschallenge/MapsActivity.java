@@ -49,6 +49,7 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback,
@@ -226,46 +227,45 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         mQueue.add(request);
     }
 
-    public void Write(String json){
+    //Creacion de archivo
+    public void Write(String filename,String json){
         try {
-            // Creates a file in the primary external storage space of the
-            // current application.
-            // If the file does not exists, it is created.
-            File testFile = new File(this.getExternalFilesDir(null), "TestFile.json");
+            File testFile = new File(this.getExternalFilesDir(null), filename + ".json");
             if (!testFile.exists()) {
                 testFile.createNewFile();
                 BufferedWriter writer = new BufferedWriter(new FileWriter(testFile, true /*append*/));
-                String jsonFinal ="{" + '\n' + "\"" + "places" + "\":[" + "\n" +"{"+ json + "}" + '\n' + "]" + "\n" + "}" ;
+                String jsonFinal ="{" + '\n' + "\"" + filename + "\":[" + "\n" +"{"  + "\n" + json + "\n" + "}" + '\n' + "]" + "\n" + "}" ;
                 writer.write(jsonFinal);
                 Log.e("Escritura", "Se escribio" + jsonFinal);
                 writer.close();
             }else {
                 // Adds a line to the file
-                BufferedWriter writer = new BufferedWriter(new FileWriter(testFile, false /*append*/));
+
                 String jsonFInal = "," + "\n" + "{" + "\n" + json + "\n" + "}";
-                writer.write(addObject(jsonFInal));
-                Log.e("Escritura nueva", "Se escribio" + jsonFInal);
+                String finalText = addObject(filename,jsonFInal);
+                testFile.delete();
+                testFile.createNewFile();
+                BufferedWriter writer = new BufferedWriter(new FileWriter(testFile, true /*append*/));
+                writer.write(finalText);
+                Log.e("Escritura nueva", "Se escribio" + finalText);
                 writer.close();
             }
 
-            // Refresh the data so it can seen when the device is plugged in a
-            // computer. You may have to unplug and replug the device to see the
-            // latest changes. This is not necessary if the user should not modify
-            // the files.
+
             MediaScannerConnection.scanFile(this,
                     new String[]{testFile.toString()},
                     null,
                     null);
         } catch (IOException e) {
-            Log.e("ReadWriteFile1", "Unable to write to the TestFile.txt file.");
+            Log.e("ReadWriteFile1", "Unable to write to the TestFile.json file.");
         }
     }
 
-    public String addObject(String obj){
+    public String addObject(String filename, String obj){
         String textFromFile = "";
 // Gets the file from the primary external storage space of the
 // current application.
-        File testFile = new File(this.getExternalFilesDir(null), "TestFile.json");
+        File testFile = new File(this.getExternalFilesDir(null), filename + ".json");
         if (testFile != null) {
             StringBuilder stringBuilder = new StringBuilder();
             // Reads the data from the file
@@ -277,17 +277,16 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 while ((line = reader.readLine()) != null) {
                     if(line.equals("]")){
                         textFromFile += obj;
-                        textFromFile += "\n" + "]" + "\n" + "}";
+                        textFromFile += "\n" + "]" + "\n";
                         line = null;
                     }else {
                         textFromFile += line.toString();
                         textFromFile += "\n";
-                        Log.e("Lines", line.toString());
                     }
                 }
                 reader.close();
             } catch (Exception e) {
-                Log.e("ReadWriteFile2", "Unable to read the TestFile.txt file.");
+                Log.e("ReadWriteFile2", "Unable to read the file.");
             }
             return textFromFile;
         }else {
@@ -296,8 +295,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     }
 
-    public void AddJson(View view){
-        Write("hola");
+    public void AddJson(View view) {
+        Place place = new Place();
+        place.name = "Tec";
+        place.longitude = "101.21";
+        place.altitude = "102.3";
+        Write("place", place.toJson());
     }
 
 }
