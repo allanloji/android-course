@@ -64,4 +64,15 @@
         android:onClick="execute"
         android:text="Challenge" />
 
+    <Button
+        android:id="@+id/data"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/zoom_out"
+        android:layout_alignStart="@+id/zoom_out"
+        android:layout_alignTop="@+id/challenge"
+        android:layout_marginTop="6dp"
+        android:onClick="AddJson"
+        android:text="Data" />
+
 </RelativeLayout>

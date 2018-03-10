@@ -235,16 +235,16 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             if (!testFile.exists()) {
                 testFile.createNewFile();
                 BufferedWriter writer = new BufferedWriter(new FileWriter(testFile, true /*append*/));
-                String jsonFinal ="{" + '\n' + "\"" + "places" + "\":[" + json + '\n' + "]" + "\n" + "}" ;
+                String jsonFinal ="{" + '\n' + "\"" + "places" + "\":[" + "\n" +"{"+ json + "}" + '\n' + "]" + "\n" + "}" ;
                 writer.write(jsonFinal);
                 Log.e("Escritura", "Se escribio" + jsonFinal);
                 writer.close();
             }else {
                 // Adds a line to the file
                 BufferedWriter writer = new BufferedWriter(new FileWriter(testFile, false /*append*/));
-                String jsonFInal = addObject(json);
-                writer.write(jsonFInal);
-                Log.e("Escritura", "Se escribio" + jsonFInal);
+                String jsonFInal = "," + "\n" + "{" + "\n" + json + "\n" + "}";
+                writer.write(addObject(jsonFInal));
+                Log.e("Escritura nueva", "Se escribio" + jsonFInal);
                 writer.close();
             }
 
@@ -257,7 +257,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     null,
                     null);
         } catch (IOException e) {
-            Log.e("ReadWriteFile", "Unable to write to the TestFile.txt file.");
+            Log.e("ReadWriteFile1", "Unable to write to the TestFile.txt file.");
         }
     }
 
@@ -282,12 +282,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     }else {
                         textFromFile += line.toString();
                         textFromFile += "\n";
+                        Log.e("Lines", line.toString());
                     }
-                    Log.e("Lines", line.toString());
                 }
                 reader.close();
             } catch (Exception e) {
-                Log.e("ReadWriteFile", "Unable to read the TestFile.txt file.");
+                Log.e("ReadWriteFile2", "Unable to read the TestFile.txt file.");
             }
             return textFromFile;
         }else {
