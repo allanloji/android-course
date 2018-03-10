@@ -73,6 +73,27 @@
         android:layout_alignTop="@+id/challenge"
         android:layout_marginTop="6dp"
         android:onClick="AddJson"
-        android:text="Data" />
+        android:text="write Data" />
+
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/style"
+        android:layout_alignStart="@+id/style"
+        android:layout_alignTop="@+id/data"
+        android:onClick="ReadPlace"
+        android:text="Read" />
+
+    <Button
+        android:id="@+id/button3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/zoom_in"
+        android:layout_alignStart="@+id/zoom_in"
+        android:layout_below="@+id/data"
+        android:layout_marginTop="20dp"
+        android:onClick="DeletePlace"
+        android:text="Delete" />
 
 </RelativeLayout>

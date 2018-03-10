@@ -7,6 +7,7 @@ import android.location.Location;
 import android.media.MediaScannerConnection;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Debug;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.ActivityCompat;
@@ -263,8 +264,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     public String addObject(String filename, String obj){
         String textFromFile = "";
-// Gets the file from the primary external storage space of the
-// current application.
         File testFile = new File(this.getExternalFilesDir(null), filename + ".json");
         if (testFile != null) {
             StringBuilder stringBuilder = new StringBuilder();
@@ -295,6 +294,43 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     }
 
+
+
+    public void Read(String filename){
+        String textFromFile = "";
+        File testFile = new File(this.getExternalFilesDir(null), filename + ".json");
+        if (testFile != null) {
+            StringBuilder stringBuilder = new StringBuilder();
+            // Reads the data from the file
+            BufferedReader reader = null;
+            try {
+                reader = new BufferedReader(new FileReader(testFile));
+                String line;
+
+                while ((line = reader.readLine()) != null) {
+                    textFromFile += line.toString();
+                    textFromFile += "\n";
+                }
+                reader.close();
+            } catch (Exception e) {
+                Log.e("ReadWriteFile2", "Unable to read the file.");
+            }
+        }
+        Log.e("El json es", textFromFile);
+
+    }
+
+    public void Delete(String filename){
+        File testFile = new File(this.getExternalFilesDir(null), filename + ".json");
+        testFile.delete();
+        Log.e("El json fue borrado", "Json " + filename);
+    }
+
+
+    public void ReadPlace(View view){
+        Read("place");
+    }
+
     public void AddJson(View view) {
         Place place = new Place();
         place.name = "Tec";
@@ -302,5 +338,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         place.altitude = "102.3";
         Write("place", place.toJson());
     }
+
+    public void DeletePlace(View view){
+        Delete("place");
+    }
+
+
 
 }
