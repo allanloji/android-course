@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.text.method.ScrollingMovementMethod;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -42,11 +43,13 @@ public class MainActivity extends Activity implements AIListener {
         button = (Button) findViewById(R.id.button);
         editText = (EditText) findViewById(R.id.editText);
         textView = (TextView) findViewById(R.id.textView);
+        textView.setMovementMethod(new ScrollingMovementMethod());
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 new SendRequestTask(aiDataService).execute(editText.getText().toString());
+                editText.getText().clear();
             }
         });
     }
@@ -75,8 +78,8 @@ public class MainActivity extends Activity implements AIListener {
         protected void onPostExecute(AIResponse aiResponse) {
             super.onPostExecute(aiResponse);
             Result result = aiResponse.getResult();
-            textView.append("You: " + result.getResolvedQuery() + "\r\n" );
-            textView.append("Bot: " + result.getFulfillment().getSpeech()+"\r\n");
+            textView.append("Tu: " + result.getResolvedQuery() + "\r\n" );
+            textView.append("Rick: " + result.getFulfillment().getSpeech()+"\r\n");
         }
     }
 
